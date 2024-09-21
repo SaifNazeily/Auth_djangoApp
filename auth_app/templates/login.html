@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+
+{% block title %}Log In{% endblock %}
+
+{% block content %}
+<div class="form-container">
+    <h2 class="form-title">Log In</h2>
+    <form id="login-form" method="POST">
+        {% csrf_token %}
+        <div class="mb-3">
+            <label for="username" class="form-label">Username</label>
+            <input type="text" name="username" class="form-control" id="username" required>
+        </div>
+        <div class="mb-3">
+            <label for="password" class="form-label">Password</label>
+            <input type="password" name="password" class="form-control" id="password" required>
+        </div>
+
+        <!-- Spinner (hidden by default) -->
+        <div id="login-spinner" class="spinner-border text-primary" role="status" style="display: none;">
+          <span class="visually-hidden">Logging in...</span>
+        </div>
+
+        <!-- Submit button -->
+        <button type="submit" class="btn btn-primary w-100">Log In</button>
+
+        {% if error %}
+            <div class="alert alert-danger mt-3" role="alert">{{ error }}</div>
+        {% endif %}
+    </form>
+
+    <p class="text-center mt-3">
+        Don't have an account? <a href="{% url 'register' %}">Register here</a>
+    </p>
+</div>
+
+<script>
+    document.getElementById('login-form').addEventListener('submit', function() {
+        document.getElementById('login-spinner').style.display = 'block';
+    });
+</script>
+{% endblock %}

@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block title %}Enter OTP{% endblock %}
+
+{% block content %}
+<div class="form-container">
+    <h2 class="form-title">Enter OTP</h2>
+    <form id="otp-form" method="POST">
+        {% csrf_token %}
+        <div class="mb-3">
+            <label for="otp" class="form-label">OTP</label>
+            <input type="text" name="otp" class="form-control" id="otp" required>
+        </div>
+        {% if error %}
+            <div class="alert alert-danger" role="alert">{{ error }}</div>
+        {% endif %}
+
+        <!-- Spinner (hidden by default) -->
+        <div id="otp-spinner" class="spinner-border text-primary" role="status" style="display: none;">
+          <span class="visually-hidden">Verifying OTP...</span>
+        </div>
+        
+        <button type="submit" class="btn btn-primary w-100">Verify OTP</button>
+    </form>
+</div>
+
+<script>
+    document.getElementById('otp-form').addEventListener('submit', function() {
+        document.getElementById('otp-spinner').style.display = 'block';
+    });
+</script>
+{% endblock %}
